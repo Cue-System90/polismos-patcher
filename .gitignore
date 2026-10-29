@@ -1,0 +1,11 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Niemals Spieldaten einchecken
+*.dll
+*.assets
+*.resS
+*.orig
+*.tmp
