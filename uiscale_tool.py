@@ -21,7 +21,14 @@ import argparse
 import os
 import shutil
 import struct
+import sys
 from dataclasses import dataclass
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import argparse_de
+except ImportError:  # Skript wurde einzeln kopiert
+    argparse_de = None
 
 import dnfile
 from dncil.cil.body import CilMethodBody
@@ -314,8 +321,10 @@ def cmd_patch(args):
 
 
 def main():
+    if argparse_de:
+        argparse_de.install()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub = ap.add_subparsers(dest="cmd", required=True, title="Befehle", metavar="BEFEHL")
     s = sub.add_parser("scan", help="Methoden mit CanvasScaler-Zugriff und ihre Konstanten auflisten")
     s.add_argument("dll")
     s.add_argument("--method", help="nur diese Methode zeigen (Typ::Name oder Name)")

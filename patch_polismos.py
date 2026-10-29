@@ -26,6 +26,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from uiscale_tool import Assembly  # noqa: E402
 
+try:
+    import argparse_de
+except ImportError:  # Skript wurde einzeln kopiert
+    argparse_de = None
+
 APP_ID = "2745040"
 DLL_REL = os.path.join("Polismos_Data", "Managed", "Assembly-CSharp.dll")
 ASSETS_REL = os.path.join("Polismos_Data", "sharedassets1.assets")
@@ -180,6 +185,8 @@ def restore(game: str) -> None:
 
 
 def main() -> None:
+    if argparse_de:
+        argparse_de.install()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--game-dir", help="Polismos-Ordner (Standard: Steam-Bibliotheken durchsuchen)")
     ap.add_argument("--scale3", type=float, default=1.6, help="Faktor für Regler-Stufe 3, Original 1.20 (Standard 1.60)")
